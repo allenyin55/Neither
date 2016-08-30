@@ -1,2 +1,2 @@
 # Neither
-A repo for the app Neither
+A repo for the android app Neither
