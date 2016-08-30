@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Neither</string>
+    <string name="chooseTopic">Choose a topic:</string>
+    <string name="chooseMedia">Or choose a medium</string>
+    <string name="topicButton1">Trump</string>
+    <string name="mediaButton1">Google News</string>
+    <string name="topicPrompt">What do you say?</string>
+    <string name="posAns">Sure!</string>
+    <string name="negAns">Nah..</string>
+    <string name="peopleThought">People's thoughts</string>
+    <string name="yourThought">What do you think?</string>
+    <string name="mediaThought">This media's thought</string>
+</resources>
