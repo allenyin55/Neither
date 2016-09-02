@@ -16,7 +16,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".OnTopicActivity" />
-        <activity android:name=".OnMediaActivity"></activity>
+        <activity android:name=".OnMediaActivity" />
+        <activity android:name=".TopicResultActivity" />
+        <activity android:name=".ThoughtEntryActivity" />
+        <activity android:name=".ThoughtBrowseActivity"></activity>
     </application>
 
 </manifest>
