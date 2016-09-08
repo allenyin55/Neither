@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.allen.neither">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +22,8 @@
         <activity android:name=".OnMediaActivity" />
         <activity android:name=".TopicResultActivity" />
         <activity android:name=".ThoughtEntryActivity" />
-        <activity android:name=".ThoughtBrowseActivity"></activity>
+        <activity android:name=".ThoughtBrowseActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>
