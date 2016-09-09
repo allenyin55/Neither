@@ -76,6 +76,7 @@ public class OnMediaActivity extends AppCompatActivity {
         // you don't want to refresh the display--this would force the display of
         // an error page instead of stackoverflow.com content.
         if (refreshDisplay) {
+
             loadPage();
         }
     }
@@ -109,6 +110,8 @@ public class OnMediaActivity extends AppCompatActivity {
     // causing a delay that results in a poor user experience, always perform
     // network operations on a separate thread from the UI.
     private void loadPage() {
+        // force wifiConnected to be true because the emulator wouldn't work otherwise
+        wifiConnected = true;
         if (((sPref.equals(ANY)) && (wifiConnected || mobileConnected))
                 || ((sPref.equals(WIFI)) && (wifiConnected))) {
             // AsyncTask subclass

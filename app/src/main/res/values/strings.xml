@@ -13,6 +13,8 @@
     <string name="resultPrompt">People\'s choice on this</string>
     <string name="addStuff">Add..</string>
     <string name="thoughtsEntry">So what is it that you want to say?</string>
+    <string name="save">Save</string>
+    <string name="showThoughts">Here\'s some people\'s thoughts</string>
 
     <!--  Menu items -->
     <string name="settings">Settings</string>

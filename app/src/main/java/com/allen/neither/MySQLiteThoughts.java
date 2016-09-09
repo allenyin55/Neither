@@ -10,39 +10,35 @@ import android.util.Log;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySQLiteHelper extends SQLiteOpenHelper {
+public class MySQLiteThoughts extends SQLiteOpenHelper {
 
-    // Results table name
-    private static final String TABLE_RESULTS = "results";
+    // thoughts table name
+    private static final String TABLE_THOUGHTS = "thoughts";
 
-    // Results Table Columns names
+    // thoughts Table Columns names
     private static final String KEY_ID = "id";
-    private static final String KEY_YESRESULT = "yesResult";
-    private static final String KEY_NORESULT = "noResult";
-    private static final String KEY_NEIRESULT = "neiResult";
+    private static final String KEY_THOUGHTS = "newThoughts";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_YESRESULT,KEY_NORESULT, KEY_NEIRESULT};
+    private static final String[] COLUMNS = {KEY_ID,KEY_THOUGHTS};
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "ResultDB";
+    private static final String DATABASE_NAME = "ThoughtsDB";
 
-    public MySQLiteHelper(Context context) {
+    public MySQLiteThoughts(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // SQL statement to create result table
-        String CREATE_RESULT_TABLE = "CREATE TABLE results ( " +
+        String CREATE_THOUGHT_TABLE = "CREATE TABLE thoughts ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "yesResult INTEGER, "+
-                "noResult INTEGER, "+
-                "neiResult INTEGER )";
+                "thoughts STRING)";
 
-        // create Results table
-        db.execSQL(CREATE_RESULT_TABLE);
+        // create thoughts table
+        db.execSQL(CREATE_THOUGHT_TABLE);
     }
 
     @Override
@@ -54,21 +50,19 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public void addResults(ResultDataClass result){
+    public void addThoughts(ThoughtsDataClass thoughts){
         //for logging
-        Log.d("addResult", result.toString());
+        Log.d("addThought", thoughts.toString());
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(KEY_YESRESULT, result.getYesResult());
-        values.put(KEY_NORESULT, result.getNoResult());
-        values.put(KEY_NEIRESULT, result.getNeiResult());
+        values.put(KEY_THOUGHTS, thoughts.getThoughts());
 
         // 3. insert
-        db.insert(TABLE_RESULTS, // table
+        db.insert(TABLE_THOUGHTS, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
 
@@ -76,45 +70,43 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<ResultDataClass> getAllResults() {
-        List<ResultDataClass> results = new LinkedList<ResultDataClass>();
+    public List<ThoughtsDataClass> getAllThoughts() {
+        List<ThoughtsDataClass> thoughts = new LinkedList<ThoughtsDataClass>();
 
         // 1. build the query
-        String query = "SELECT  * FROM " + TABLE_RESULTS;
+        String query = "SELECT  * FROM " + TABLE_THOUGHTS;
 
         // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build book and add it to list
-        ResultDataClass result = null;
+        ThoughtsDataClass thought = null;
         if (cursor.moveToFirst()) {
             do {
-                result = new ResultDataClass();
-                result.setId(Integer.parseInt(cursor.getString(0)));
-                result.setYesResult(Integer.parseInt(cursor.getString(1)));
-                result.setNoResult(Integer.parseInt(cursor.getString(2)));
-                result.setNeiResult(Integer.parseInt(cursor.getString(3)));
+                thought = new ThoughtsDataClass();
+                thought.setId(Integer.parseInt(cursor.getString(0)));
+                thought.setThoughts(cursor.getString(1));
 
-                // Add result to results
-                results.add(result);
+                // Add result to thoughts
+                thoughts.add(thought);
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllResults()", results.toString());
+        Log.d("getAllThoughts()", thoughts.toString());
 
-        // return results
-        return results;
+        // return thoughts
+        return thoughts;
     }
 
-    public ResultDataClass getResult(int id){
+    public ThoughtsDataClass getThoughts(int id){
 
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
         // 2. build query
         Cursor cursor =
-                db.query(TABLE_RESULTS, // a. table
+                db.query(TABLE_THOUGHTS, // a. table
                         COLUMNS, // b. column names
                         " id = ?", // c. selections
                         new String[] { String.valueOf(id) }, // d. selections args
@@ -123,32 +115,30 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                         null, // g. order by
                         null); // h. limit
 
-        // 3. if we got results get the first one
+        // 3. if we got thoughts get the first one
         if (cursor != null)
             cursor.moveToFirst();
 
         // 4. build book object
-        ResultDataClass result = new ResultDataClass();
-        result.setId(Integer.parseInt(cursor.getString(0)));
-        result.setYesResult(Integer.parseInt(cursor.getString(1)));
-        result.setNoResult(Integer.parseInt(cursor.getString(2)));
-        result.setNeiResult(Integer.parseInt(cursor.getString(3)));
+        ThoughtsDataClass thought = new ThoughtsDataClass();
+        thought.setId(Integer.parseInt(cursor.getString(0)));
+        thought.setThoughts(cursor.getString(1));
 
 
         //log
-        Log.d("getBook("+id+")", result.toString());
+        Log.d("getThoughts("+id+")", thought.toString());
 
         // 5. return book
-        return result;
+        return thought;
     }
 
-    public void deleteResult() {
+    public void deleteThoughts() {
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. delete
-        db.execSQL("delete from "+ TABLE_RESULTS);
+        db.execSQL("delete from "+ TABLE_THOUGHTS);
 
         // 3. close
         db.close();

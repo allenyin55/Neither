@@ -33,14 +33,14 @@ public class TopicResultActivity extends AppCompatActivity {
         /**
          * CRUD Operations
          * */
-        // add Books
+        // add Results
         db.addResults(new ResultDataClass(result));
 
         /** Caution!! This is for DELETING all the data!!
          *db.deleteResult();
          *  */
 
-        // get all books
+        // get all results
         List<ResultDataClass> list = db.getAllResults();
 
         int yes=0;
